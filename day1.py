@@ -1,31 +1,28 @@
-# Day 1 Solution: Calibration Problem
-# Txt file input
+import re
 
-def calibration(str):
-    # Large list of lines as input
-    sum = 0
-    for line in str.splitlines():
-        num = calibration_helper(line)
-        sum += int(num)
-    return sum
+with open("input") as f:
+    data = f.read().strip()
 
-def calibration_helper(str):
-    # Get first and last number in string
-    fnum, lnum = 0, 0
-    for i in str:
-        if i.isdigit():
-            fnum = int(i)
-            break
-    for i in reversed(str):
-        if i.isdigit():
-            lnum = int(i)
-            if fnum == lnum:
-                print("Sum" + i + i)
-                print("Found" + i)
-                return i + i
-            break
-    print(str(fnum) + str(lnum))
-    return fnum + lnum
 
-input = open("input.txt").read()
-print(calibration(input))
+def calibration(data):
+    ls = data.split("\n")
+    ns = [re.findall("\d", x) for x in ls]
+    return sum(int(n[0] + n[-1]) for n in ns)
+
+
+# Part 1
+print(calibration(data))
+
+# Part 2
+data = (
+    data.replace("one", "one1one")
+    .replace("two", "two2two")
+    .replace("three", "three3three")
+    .replace("four", "four4four")
+    .replace("five", "five5five")
+    .replace("six", "six6six")
+    .replace("seven", "seven7seven")
+    .replace("eight", "eight8eight")
+    .replace("nine", "nine9nine")
+)
+print(calibration(data))
